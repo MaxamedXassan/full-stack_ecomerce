@@ -5,7 +5,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { CheckCircle2, MoreVertical, XCircle } from "lucide-react"
 import db from "@/db/db"
 import { formatCurency, formatNumber } from "@/lib/formatters"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
+import { ActiveToggleDropdownItem, DeleteDropdownItem } from "./_components/ProductAction"
 
 
 export default function AdminProductsPage() {
@@ -80,13 +81,18 @@ export default function AdminProductsPage() {
                             <a download href={`/admin/products/${product.id}/download`}>
                             Download
                             </a>
+                           
                         </DropdownMenuItem>
-
+                            <br/>
                         <DropdownMenuItem asChild>
                            <Link href={`/admin/products/${product.id}/edit`}>
                            Edit
                            </Link>
                         </DropdownMenuItem>
+                        <ActiveToggleDropdownItem id={product.id} isAvailableForPurchase={product.isAvailableForPurchase} />
+                        <DropdownMenuSeparator />
+                       
+                        <DeleteDropdownItem id={product.id} disabled={product._count.orders > 0} />
                     </DropdownMenuContent>
                     </DropdownMenu>
                 </TableCell>
